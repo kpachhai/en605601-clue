@@ -38,7 +38,6 @@ public class Introduction extends JFrame {
         // Put the title and the button on top of background(i.e. to the foreground)
         backgroundImage.setLayout(new BorderLayout());
         titleLabel = new JLabel(new ImageIcon("images/welcome.png"), JLabel.CENTER);
-        titleLabel.setForeground(Color.RED);
         startButton = new JButton("Start Game");
         instructionButton = new JButton("Instructions");
         
