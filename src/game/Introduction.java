@@ -25,7 +25,7 @@ public class Introduction extends JFrame {
     private void prepareGUI(){
         // Set up the background 
         mainFrame = new JFrame("Clue-Less Game with a Twist");
-        mainFrame.setSize(800, 800);
+        mainFrame.setSize(810, 810);
         mainFrame.setLayout(new GridLayout(1,1));
         
         backgroundImage = new JLabel(new ImageIcon("images/background.png"), JLabel.CENTER);
