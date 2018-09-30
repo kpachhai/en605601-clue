@@ -1,3 +1,8 @@
+## Set up your workspace
+- Install Netbeans from https://netbeans.apache.org/download/nb90/nb90.html. The zip link is https://www.apache.org/dyn/closer.cgi/incubator/netbeans/incubating-netbeans-java/incubating-9.0/incubating-netbeans-java-9.0-bin.zip
+- Install JDK for Windows: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+- Use https://www.tutorialspoint.com for help with how Java SWING works and for basic Java documentation and tutorials 
+
 ## This is a simple hello world version of the popular game of Clue: Classic Edition
 
 ## Project Description

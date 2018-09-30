@@ -2,7 +2,7 @@ package game;
 
 /**
  *
- * @author kiran pachhai
+ * @author kiran
  */
 public class Main {
 
