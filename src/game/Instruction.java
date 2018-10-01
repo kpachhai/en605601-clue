@@ -8,18 +8,16 @@ import java.awt.*;
  * @author kiran
  */
 public class Instruction extends JFrame {
-
     private JLabel label;
     private JScrollPane jScrollPane;
 
-    /**
-     * Constructor.
-     */
+    /** Constructor.  */
     public Instruction() {
-
-        /**
-         * Insert label into a scroll pane
-         */
+        prepareGUI();
+    }
+    
+    private void prepareGUI(){
+        /* Put the content for the instructions here */
         String content = "<html>\n"
                 + "This page is reserved for instructions"
                 + "</html>";
