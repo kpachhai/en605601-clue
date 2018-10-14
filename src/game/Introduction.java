@@ -8,7 +8,7 @@ import java.awt.event.*;
  *
  * @author kiran
  */
-public class Introduction extends JFrame {
+public class Introduction {
     //Frame Components.
     private JFrame mainFrame;
     private JLabel backgroundImage;
@@ -16,7 +16,7 @@ public class Introduction extends JFrame {
     private JButton startButton;
     private JButton instructionButton;
     private Instruction instructionUI;
-    //private SelectCharacter selectCharacterUI;
+    private SelectCharacter selectCharacterUI;
 
     /* Constructor.  */
     public Introduction(){
@@ -41,8 +41,8 @@ public class Introduction extends JFrame {
         backgroundImage.add(instructionButton, BorderLayout.PAGE_END);
         
         startButton.addActionListener((ActionEvent e) -> {
-            //selectCharacterUI = new SelectCharacter();
-            //mainFrame.dispose();
+            selectCharacterUI = new SelectCharacter();
+            mainFrame.dispose();
         });
         instructionButton.addActionListener((ActionEvent e) -> {
             instructionUI = new Instruction();
