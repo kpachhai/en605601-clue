@@ -52,6 +52,7 @@ public final class GameItems {
 
         /**
          * Get Methods for Card values
+         * @return 
          */
         public String getName() {
             return name;
@@ -63,6 +64,91 @@ public final class GameItems {
 
         public int getType() {
             return type;
+        }
+    }
+
+    /**
+     * eNum Rooms represents all selectable locations on the board.
+     */
+    public enum Rooms {
+        //Rooms
+        STUDY(new Area(new Rectangle(43, 24, 150, 107)), 45, 45, "Study"),
+        LIBRARY(new Area(new Rectangle(43, 219, 150, 107)), 45, 268, "Library"),
+        CONSERVATORY(new Area(new Rectangle(43, 438, 150, 107)), 48, 460, "Conservatory"),
+        HALL(new Area(new Rectangle(245, 23, 150, 107)), 250, 45, "Hall"), 
+        BILLIARD(new Area(new Rectangle(250, 218, 150, 107)), 255, 273, "Billiard Room"),
+        BALLROOM(new Area(new Rectangle(245, 439, 150, 107)), 255, 446, "Ballroom"),
+        LOUNGE(new Area(new Rectangle(446, 19, 150, 107)), 445, 40, "Lounge"),
+        DININGROOM(new Area(new Rectangle(450, 217, 150, 107)), 455, 273, "Dining Room"),
+        KITCHEN(new Area(new Rectangle(450, 435, 150, 107)), 455, 465, "Kitchen");
+
+        private Area boundaryBox;   //Mapped boundary for room.
+        private int xPos;           //X-Position of Game Piece origin in room.
+        private int yPos;           //Y-Position of Game Piece origin in room.
+        private Point position;     //Position of Game Piece given as point.
+        private String name;        //String name of room, primarily for file IO.
+
+        /**
+         * Constructor.
+         */
+        Rooms(Area boundaryBox, int xPos, int yPos, String name) {
+            this.boundaryBox = boundaryBox;
+            this.xPos = xPos;
+            this.yPos = yPos;
+            position = new Point(xPos, yPos);
+            this.name = name;
+        }
+
+        /**
+         * Get Methods
+         */
+        public Area getBoundaryBox() {
+            return boundaryBox;
+        }
+
+        public int getXPos() {
+            return xPos;
+        }
+
+        public int getYPos() {
+            return yPos;
+        }
+
+        public Point getPosition() {
+            return position;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    /**
+     * eNum Passages represents all intermediary positions on the board.
+     */
+    public enum Passages {
+
+        //Passage Areas.
+        PASSAGE_STUDY_LIBRARY(78, 150), PASSAGE_LIBRARY_CONSERVATORY(78, 365), PASSAGE_CONSERVATORY_BALLROOM(185, 478), 
+        PASSAGE_BALLROOM_KITCHEN(320, 478), PASSAGE_KITCHEN_DININGROOM(492, 365), PASSAGE_DININGROOM_LOUNGE(492, 150), 
+        PASSAGE_LOUNGE_HALL(382, 50), PASSAGE_HALL_STUDY(185, 50), PASSAGE_BILLIARD_HALL(280, 150),
+        PASSAGE_BILLIARD_LIBRARY(185, 248), PASSAGE_BILLIARD_BALLROOM(280, 365), PASSAGE_BILLIARD_DININGROOM(382, 248);
+
+        private Point position;     //Location of Hall tile.
+
+        /**
+         * Constructor
+         */
+        Passages(int xPos, int yPos) {
+            position = new Point(xPos, yPos);
+        }
+
+        /**
+         * Get Methods
+         * @return 
+         */
+        public Point getPosition() {
+            return position;
         }
     }
 
@@ -100,84 +186,6 @@ public final class GameItems {
 
         public Rooms getRooms() {
             return rooms;
-        }
-    }
-
-    /**
-     * eNum Passages represents all intermediary positions on the board.
-     */
-    public enum Passages {
-
-        //Hall Areas.
-        HALL_A(167, 127), HALL_B(234, 168), HALL_C(166, 295), HALL_D(234, 360),
-        HALL_E(144, 402), HALL_F(368, 189), HALL_G(368, 359);
-
-        private Point position;     //Location of Hall tile.
-
-        /**
-         * Constructor
-         */
-        Passages(int xPos, int yPos) {
-            position = new Point(xPos, yPos);
-        }
-
-        /**
-         * Get Methods
-         */
-        public Point getPosition() {
-            return position;
-        }
-    }
-
-    /**
-     * eNum Rooms represents all selectable locations on the board.
-     */
-    public enum Rooms {
-        //Rooms
-        STUDY(new Area(new Rectangle(40, 50, 160, 90)), 55, 75, "Study"),
-        LIBRARY(new Area(new Rectangle(40, 180, 160, 100)), 55, 215, "Library"),
-        BILLIARD(new Area(new Rectangle(40, 300, 140, 105)), 55, 340, "Billiard Room"),
-        CONSERVATORY(new Area(new Rectangle(40, 455, 140, 110)), 55, 490, "Conservatory"),
-        HALL(new Area(new Rectangle(250, 60, 130, 135)), 255, 125, "Hall"),
-        BALLROOM(new Area(new Rectangle(230, 415, 175, 125)), 255, 470, "Ballroom"),
-        LOUNGE(new Area(new Rectangle(430, 50, 155, 125)), 460, 105, "Lounge"),
-        DININGROOM(new Area(new Rectangle(405, 240, 185, 145)), 460, 300, "Dining Room"),
-        KITCHEN(new Area(new Rectangle(450, 435, 140, 140)), 460, 490, "Kitchen");
-
-        private Area boundaryBox;   //Mapped boundary for room.
-        private int xPos;           //X-Position of Game Piece origin in room.
-        private int yPos;           //Y-Position of Game Piece origin in room.
-        private Point position;     //Position of Game Piece given as point.
-        private String name;        //String name of room, primarily for file IO.
-
-        /**
-         * Constructor.
-         */
-        Rooms(Area boundaryBox, int xPos, int yPos, String name) {
-            this.boundaryBox = boundaryBox;
-            this.xPos = xPos;
-            this.yPos = yPos;
-            position = new Point(xPos, yPos);
-            this.name = name;
-        }
-
-        /**
-         * Get Methods
-         */
-        public Area getBoundaryBox() {
-            return boundaryBox;
-        }
-        public int getXPos() {
-            return xPos;
-        }
-        public int getYPos() {
-            return yPos;
-        }
-        public Point getPosition() {
-            return position;
-        }
-        public String getName() {
-            return name;
         }
     }
 }

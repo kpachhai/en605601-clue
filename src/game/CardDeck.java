@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
 import game.GameItems.Card;
@@ -20,26 +15,32 @@ public class CardDeck {
     private ArrayList<Card> rooms;      //Container for all room cards.
     private ArrayList<Card> suspects;   //Container for all suspect cards.
 
+    private Card envelopeWeapon;
+    private Card envelopeRoom;
+    private Card envelopeSuspect;
+
     private Random rand = new Random();
 
-    /**
-     * Constructor
-     */
     public CardDeck() {
-
         //Instantiate ArrayLists.
-        weapons = new ArrayList<Card>();
-        rooms = new ArrayList<Card>();
-        suspects = new ArrayList<Card>();
+        weapons = new ArrayList<>();
+        rooms = new ArrayList<>();
+        suspects = new ArrayList<>();
 
         //add cards to appropriate container.
         for (Card card : Card.values()) {
-            if (card.getType() == 1) {
-                weapons.add(card);
-            } else if (card.getType() == 2) {
-                rooms.add(card);
-            } else if (card.getType() == 3) {
-                suspects.add(card);
+            switch (card.getType()) {
+                case 1:
+                    weapons.add(card);
+                    break;
+                case 2:
+                    rooms.add(card);
+                    break;
+                case 3:
+                    suspects.add(card);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -47,41 +48,6 @@ public class CardDeck {
         Collections.shuffle(weapons);
         Collections.shuffle(rooms);
         Collections.shuffle(suspects);
-    }
-
-    /**
-     * drawCard Method returns a random type of card.
-     *
-     * @return Drawn card, randomized between all three ArrayLists.
-     */
-    private Card drawCard() {
-
-        //Set container for return and ne
-        Card toReturn = null;
-
-        while (toReturn == null && !allEmpty()) {
-            int i = rand.nextInt(3) + 1;
-
-            switch (i) {
-                case 1:
-                    if (!weapons.isEmpty()) {
-                        toReturn = drawWeapon();
-                    }
-                    break;
-                case 2:
-                    if (!rooms.isEmpty()) {
-                        toReturn = drawRoom();
-                    }
-                    break;
-
-                case 3:
-                    if (!suspects.isEmpty()) {
-                        toReturn = drawSuspects();
-                    }
-                    break;
-            }
-        }
-        return toReturn;
     }
 
     /**
@@ -130,6 +96,59 @@ public class CardDeck {
     }
 
     /**
+     * drawCard Method returns a random type of card.
+     *
+     * @return Drawn card, randomized between all three ArrayLists.
+     */
+    private Card drawCard() {
+
+        //Set container for return and ne
+        Card toReturn = null;
+
+        for (Card card : Card.values()) {
+            if (card != envelopeWeapon && card != envelopeRoom && card != envelopeSuspect) {
+                switch (card.getType()) {
+                    case 1:
+                        weapons.add(card);
+                        break;
+                    case 2:
+                        rooms.add(card);
+                        break;
+                    case 3:
+                        suspects.add(card);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        while (toReturn == null && !allEmpty()) {
+            int i = rand.nextInt(3) + 1;
+
+            switch (i) {
+                case 1:
+                    if (!weapons.isEmpty()) {
+                        toReturn = drawWeapon();
+                    }
+                    break;
+                case 2:
+                    if (!rooms.isEmpty()) {
+                        toReturn = drawRoom();
+                    }
+                    break;
+
+                case 3:
+                    if (!suspects.isEmpty()) {
+                        toReturn = drawSuspects();
+                    }
+                    break;
+            }
+        }
+        return toReturn;
+    }
+
+    /**
      * fillEnvelope draws one of each type card from deck and places it in
      * envelope.
      *
@@ -139,17 +158,22 @@ public class CardDeck {
         Card[] envelope = new Card[3];
 
         envelope[0] = drawWeapon();
+        envelopeWeapon = envelope[0];
         envelope[1] = drawRoom();
+        envelopeRoom = envelope[1];
         envelope[2] = drawSuspects();
+        envelopeSuspect = envelope[2];
 
         return envelope;
     }
 
     /**
      * dealHand deals 6 cards to a player.
+     *
+     * @return
      */
     public ArrayList<Card> dealHand() {
-        ArrayList<Card> hand = new ArrayList<Card>();
+        ArrayList<Card> hand = new ArrayList<>();
 
         for (int i = 1; i <= 6; i++) {
             hand.add(drawCard());
@@ -160,6 +184,8 @@ public class CardDeck {
 
     /**
      * allEmpty checks if all cards have been drawn.
+     *
+     * @return
      */
     public boolean allEmpty() {
         return (weapons.isEmpty() && rooms.isEmpty() && suspects.isEmpty());

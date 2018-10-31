@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package game;
 
 import game.GameItems.Card;
@@ -9,88 +14,59 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 /**
  *
  * @author kiran
  */
-public class StartGame extends JFrame implements MouseListener, ActionListener, MouseMotionListener{
+public class StartGame extends JFrame implements MouseListener, ActionListener, MouseMotionListener {
     
-    //Frame Components.
-    private Sidemenu hub;
-    private ConsoleLogic bottomPanel;
+    private JFrame mainFrame;
+    
     private GameBoard board;
+    private Sidemenu sidemenu;
+    private BottomPanel bottomPanel;
     
-        //MainUI Variables.
-    private int turn;               //Current turn number.
-    private boolean canMove;        //Conditional affecting whether new room is selectable.
-    private boolean inDisprove;     //Conditional affecting whether disproval sequence is initiated.
-    private boolean inAccuse;       //Conditional affecting whether accusation sequence is initiated.
-    private boolean turnToggle;     //Conditional affecting beginning of a new turn.
-    private boolean ownTurn;      //Conditional determining whether action is human or AI.
-
-    private Player[] players;       //All players in the game.
-    private Opponent[] opponents;   //Of the players, those that are opponents.
-    private Card[] envelope;        //Array containing the mystery answer.
-    private Card[] accusation;      //Array containing the accusers guess at answer.
-
-    private CardDeck deck;
-
-    private Random rand = new Random();
+    private Player[] players;    
+    private Card[] envelope;
+    private Card[] accusation;
     
-    public StartGame(ArrayList<GamePiece> selection) {
+    private CardDeck cardDeck;
+    
+    public StartGame(GamePiece mainPlayer) {
+        // Initialize main window
+        mainFrame = new JFrame("Clue-Less with a Twist");
+        mainFrame.setSize(850, 810);
+        mainFrame.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 1));
+        mainFrame.setBackground(Color.BLACK);
         
-        //Set initial variable states.
-        canMove = true;
-        inDisprove = false;
-        inAccuse = false;
-        ownTurn = true;
-        turnToggle = false;
-        turn = 0;
-
-        //Instantiate classes and structures.
-        deck = new CardDeck();
-        players = new Player[3];
-        opponents = new Opponent[2];
+        cardDeck = new CardDeck();
+        players = new Player[2];
         accusation = new Card[3];
-
-        //Main Panel.
-        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 1));
-        setBackground(Color.BLACK);
-
-        //Fill envelope with cards.
-        envelope = deck.fillEnvelope();
-
-        //Create AI and Players.
-        opponents[0] = new Opponent(1, deck.dealHand(), selection.get(1));
-        opponents[1] = new Opponent(2, deck.dealHand(), selection.get(2));
-        players[0] = new Player(0, deck.dealHand(), selection.get(0));
-        players[1] = opponents[0];
-        players[2] = opponents[1];
-
-        //Initialize UI Components.
-        hub = new Sidemenu(players[0]);
+        
+        envelope = cardDeck.fillEnvelope();
+              
+        // Create Players
+        players[0] = new Player(0, cardDeck.dealHand(), mainPlayer);
+        players[1] = new Player(0, cardDeck.dealHand(), GamePiece.PEACOCK);
+       
+        // Inititalize UI components
+        sidemenu = new Sidemenu(players[0]);
         board = new GameBoard(players);
-        bottomPanel = new ConsoleLogic(players[0]);
-
-        //Add Components.
-        add(board);
-        add(hub);
-        add(bottomPanel);
-
-        //Set JFrame conditionals.
-        setSize(810, 810);
-        setName("Clue");
-        setVisible(true);
-
-        //Add Mouse Listeners.
-        addMouseListener(this);
-        addMouseMotionListener(this);
-
-        //Add Action Listeners.
+        bottomPanel = new BottomPanel(players[0]);
+        
+        // Add Components
+        mainFrame.add(board);
+        mainFrame.add(sidemenu);
+        mainFrame.add(bottomPanel);
+        
+        // Set JFrame conditionals
+        mainFrame.setLocation(300, 100);
+        mainFrame.setResizable(false);
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainFrame.setVisible(true);
     }
 
     @Override
