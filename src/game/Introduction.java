@@ -8,7 +8,7 @@ import java.awt.event.*;
  *
  * @author kiran
  */
-public class Introduction extends JFrame {
+public class Introduction {
     //Frame Components.
     private JFrame mainFrame;
     private JLabel backgroundImage;
@@ -16,8 +16,9 @@ public class Introduction extends JFrame {
     private JButton startButton;
     private JButton instructionButton;
     private Instruction instructionUI;
+    private SelectCharacter selectCharacterUI;
 
-    /** Constructor.  */
+    /* Constructor.  */
     public Introduction(){
         prepareGUI();
     }
@@ -28,14 +29,8 @@ public class Introduction extends JFrame {
         mainFrame.setSize(810, 810);
         mainFrame.setLayout(new GridLayout(1,1));
         
-        backgroundImage = new JLabel(new ImageIcon("images/background.png"), JLabel.CENTER);
-        mainFrame.add(backgroundImage);
-        mainFrame.setLocation(300, 100);
-        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        mainFrame.setVisible(true);
-        mainFrame.setResizable(false);
-
         // Put the title and the button on top of background(i.e. to the foreground)
+        backgroundImage = new JLabel(new ImageIcon("images/background.png"), JLabel.CENTER);
         backgroundImage.setLayout(new BorderLayout());
         titleLabel = new JLabel(new ImageIcon("images/welcome.png"), JLabel.CENTER);
         startButton = new JButton("Start Game");
@@ -45,15 +40,18 @@ public class Introduction extends JFrame {
         backgroundImage.add(startButton, BorderLayout.PAGE_START);
         backgroundImage.add(instructionButton, BorderLayout.PAGE_END);
         
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Do Something here
-            }
+        startButton.addActionListener((ActionEvent e) -> {
+            selectCharacterUI = new SelectCharacter();
+            mainFrame.dispose();
         });
-        instructionButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                instructionUI = new Instruction();
-            }
+        instructionButton.addActionListener((ActionEvent e) -> {
+            instructionUI = new Instruction();
         });
+        
+        mainFrame.add(backgroundImage);
+        mainFrame.setLocation(300, 100);
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainFrame.setVisible(true);
+        mainFrame.setResizable(false);
     }
 }

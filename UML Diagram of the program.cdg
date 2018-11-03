@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="en605601-clue">
+  <ClassDiagramComponents>
+    <Class name="BottomPanel" package="game" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="console" type="JLabel" visibility="private"/>
+        <Field name="cardsTab" type="JPanel" visibility="private"/>
+        <Field name="consoleArea" type="JPanel" visibility="private"/>
+        <Field name="enterButton" type="JButton" visibility="private"/>
+        <Field name="suspectAssumption" type="JLabel" visibility="private"/>
+        <Field name="hand" type="JButton[]" visibility="private"/>
+        <Field name="BACK_IMAGE" type="ImageIcon" visibility="private" isFinal="true"/>
+        <Field name="PAPER" type="ImageIcon" visibility="private" isFinal="true"/>
+        <Field name="CARD_TAB_ICON" type="ImageIcon" visibility="private" isFinal="true"/>
+        <Field name="CONSOLE_TAB_ICON" type="ImageIcon" visibility="private" isFinal="true"/>
+        <Field name="player" type="Player" visibility="private"/>
+        <Field name="weaponAssumptionCard" type="Card" visibility="private"/>
+        <Field name="suspectAssumptionCard" type="Card" visibility="private"/>
+        <Field name="roomAssumptionCard" type="Card" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Player" name="player"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="stateChanged" returnType="void" visibility="public">
+          <Argument type="ChangeEvent" name="e"/>
+        </Method>
+        <Method name="getEnterButton" returnType="JButton" visibility="public"/>
+        <Method name="getHand" returnType="JButton[]" visibility="public"/>
+        <Method name="setWeaponAssumption" returnType="void" visibility="public">
+          <Argument type="Card" name="assumption"/>
+        </Method>
+        <Method name="setSuspectAssumption" returnType="void" visibility="public">
+          <Argument type="Card" name="assumption"/>
+        </Method>
+        <Method name="setRoomAssumption" returnType="void" visibility="public">
+          <Argument type="Card" name="assumption"/>
+        </Method>
+        <Method name="getWeaponAssumption" returnType="Card" visibility="public"/>
+        <Method name="getSuspectAssumption" returnType="Card" visibility="public"/>
+        <Method name="getRoomAssumption" returnType="Card" visibility="public"/>
+        <Method name="changeConsoleMessage" returnType="void" visibility="public">
+          <Argument type="String" name="message"/>
+        </Method>
+        <Method name="clearConsoleMessage" returnType="void" visibility="public"/>
+        <Method name="messageConfirmed" returnType="boolean" visibility="public"/>
+        <Method name="resetAssumption" returnType="void" visibility="public"/>
+        <Method name="highlightDisprovables" returnType="void" visibility="public">
+          <Argument type="ArrayList&lt;Card&gt;" name="guess"/>
+        </Method>
+        <Method name="highlightDisproval" returnType="void" visibility="public">
+          <Argument type="Card" name="card"/>
+        </Method>
+        <Method name="resetButtons" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CardDeck" package="game" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="weapons" type="ArrayList&lt;Card&gt;" visibility="private"/>
+        <Field name="rooms" type="ArrayList&lt;Card&gt;" visibility="private"/>
+        <Field name="suspects" type="ArrayList&lt;Card&gt;" visibility="private"/>
+        <Field name="envelopeWeapon" type="Card" visibility="private"/>
+        <Field name="envelopeRoom" type="Card" visibility="private"/>
+        <Field name="envelopeSuspect" type="Card" visibility="private"/>
+        <Field name="rand" type="Random" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="drawWeapon" returnType="Card" visibility="private"/>
+        <Method name="drawRoom" returnType="Card" visibility="private"/>
+        <Method name="drawSuspects" returnType="Card" visibility="private"/>
+        <Method name="drawCard" returnType="Card" visibility="private"/>
+        <Method name="fillEnvelope" returnType="Card[]" visibility="public"/>
+        <Method name="dealHand" returnType="ArrayList&lt;Card&gt;" visibility="public"/>
+        <Method name="allEmpty" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GameBoard" package="game" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="BOARD_IMAGE" type="ImageIcon" visibility="private" isFinal="true"/>
+        <Field name="board" type="JLabel" visibility="private"/>
+        <Field name="gamePiece" type="ArrayList&lt;JLabel&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Player[]" name="players"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getGamePiecePoint" returnType="Point" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="setBoardIcon" returnType="void" visibility="public">
+          <Argument type="ImageIcon" name="image"/>
+        </Method>
+        <Method name="resetBoardIcon" returnType="void" visibility="public"/>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="GameItems" package="game" visibility="public" isFinal="true" xPosition="920.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Guess" package="game" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="personBox" type="JComboBox" visibility="private" isFinal="true"/>
+        <Field name="button" type="JButton" visibility="private" isFinal="true"/>
+        <Field name="guess" type="Card[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="title"/>
+          <Argument type="ArrayList&lt;Card&gt;" name="hand"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getSuspectGuess" returnType="Card" visibility="public"/>
+        <Method name="getWeaponGuess" returnType="Card" visibility="public"/>
+        <Method name="getButton" returnType="JButton" visibility="public"/>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Instruction" package="game" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="label" type="JLabel" visibility="private"/>
+        <Field name="jScrollPane" type="JScrollPane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="prepareGUI" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Introduction" package="game" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="mainFrame" type="JFrame" visibility="private"/>
+        <Field name="backgroundImage" type="JLabel" visibility="private"/>
+        <Field name="titleLabel" type="JLabel" visibility="private"/>
+        <Field name="startButton" type="JButton" visibility="private"/>
+        <Field name="instructionButton" type="JButton" visibility="private"/>
+        <Field name="instructionUI" type="Instruction" visibility="private"/>
+        <Field name="selectCharacterUI" type="SelectCharacter" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="prepareGUI" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Main" package="game" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Movement" package="game" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="destination" type="Rooms" visibility="private"/>
+        <Field name="location" type="Rooms" visibility="private"/>
+        <Field name="playerNum" type="int" visibility="private"/>
+        <Field name="gamePiece" type="JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Rooms" name="start"/>
+          <Argument type="JLabel" name="gamePiece"/>
+          <Argument type="int" name="playerNum"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getDestination" returnType="Rooms" visibility="public"/>
+        <Method name="getLocation" returnType="Rooms" visibility="public"/>
+        <Method name="getXPos" returnType="int" visibility="public"/>
+        <Method name="getYPos" returnType="int" visibility="public"/>
+        <Method name="setDestination" returnType="void" visibility="public">
+          <Argument type="Rooms" name="destination"/>
+        </Method>
+        <Method name="setLocation" returnType="void" visibility="public">
+          <Argument type="Rooms" name="location"/>
+        </Method>
+        <Method name="setDistance" returnType="void" visibility="public"/>
+        <Method name="gamePieceMove" returnType="void" visibility="public">
+          <Argument type="int" name="movement"/>
+        </Method>
+        <Method name="secretPassage" returnType="boolean" visibility="public"/>
+        <Method name="nearestHall" returnType="Passages" visibility="public"/>
+        <Method name="isInARoom" returnType="boolean" visibility="public"/>
+        <Method name="getEquivalentRoom" returnType="Card" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="NoteBook" package="game" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="notebookTab" type="JTabbedPane" visibility="private"/>
+        <Field name="suspectsTab" type="JPanel" visibility="private"/>
+        <Field name="grow" type="Timer" visibility="private"/>
+        <Field name="cardBack" type="ImageIcon" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="stateChanged" returnType="void" visibility="public">
+          <Argument type="ChangeEvent" name="e"/>
+        </Method>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Player" package="game" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="hand" type="ArrayList&lt;Card&gt;" visibility="private"/>
+        <Field name="playerIcon" type="Card" visibility="private"/>
+        <Field name="movement" type="Movement" visibility="private"/>
+        <Field name="playerNum" type="int" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="gamePiece" type="JLabel" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="num"/>
+          <Argument type="ArrayList&lt;Card&gt;" name="h"/>
+          <Argument type="GamePiece" name="gamePiece"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="getHand" returnType="ArrayList&lt;Card&gt;" visibility="public"/>
+        <Method name="getMovement" returnType="Movement" visibility="public"/>
+        <Method name="getPlayerNum" returnType="int" visibility="public"/>
+        <Method name="getGamePiece" returnType="JLabel" visibility="public"/>
+        <Method name="getPlayerIcon" returnType="Card" visibility="public"/>
+        <Method name="disproved" returnType="Card" visibility="public">
+          <Argument type="ArrayList&lt;Card&gt;" name="a"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SelectCharacter" package="game" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="mainFrame" type="JFrame" visibility="private"/>
+        <Field name="displayBox" type="JPanel" visibility="private"/>
+        <Field name="startGame" type="StartGame" visibility="private"/>
+        <Field name="characters" type="ArrayList&lt;GamePiece&gt;" visibility="private"/>
+        <Field name="characterButtons" type="ArrayList&lt;JButton&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="prepareGUI" returnType="void" visibility="private"/>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Sidemenu" package="game" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="playerInfo" type="JLabel" visibility="private"/>
+        <Field name="makeAccusation" type="JButton" visibility="private"/>
+        <Field name="makeAssumption" type="JButton" visibility="private"/>
+        <Field name="endTurn" type="JButton" visibility="private"/>
+        <Field name="openNotebook" type="JButton" visibility="private"/>
+        <Field name="noteBookWindow" type="NoteBook" visibility="private"/>
+        <Field name="assumptionWindow" type="Guess" visibility="private"/>
+        <Field name="accusationWindow" type="Guess" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Player" name="player"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="changeTurnIndicator" returnType="void" visibility="public">
+          <Argument type="Card" name="nextPlayer"/>
+        </Method>
+        <Method name="toggleButtonsEnabled" returnType="void" visibility="public">
+          <Argument type="boolean" name="toggle"/>
+        </Method>
+        <Method name="getAssumptionWindow" returnType="Guess" visibility="public"/>
+        <Method name="getAccusationWindow" returnType="Guess" visibility="public"/>
+        <Method name="getNoteBookWindow" returnType="NoteBook" visibility="public"/>
+        <Method name="getMakeAccusation" returnType="JButton" visibility="public"/>
+        <Method name="getMakeAssumption" returnType="JButton" visibility="public"/>
+        <Method name="getEndTurn" returnType="JButton" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="StartGame" package="game" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields>
+        <Field name="mainFrame" type="JFrame" visibility="private"/>
+        <Field name="board" type="GameBoard" visibility="private"/>
+        <Field name="sidemenu" type="Sidemenu" visibility="private"/>
+        <Field name="bottomPanel" type="BottomPanel" visibility="private"/>
+        <Field name="players" type="Player[]" visibility="private"/>
+        <Field name="envelope" type="Card[]" visibility="private"/>
+        <Field name="accusation" type="Card[]" visibility="private"/>
+        <Field name="cardDeck" type="CardDeck" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="GamePiece" name="mainPlayer"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouseClicked" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mousePressed" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseReleased" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseEntered" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseExited" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="actionPerformed" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="e"/>
+        </Method>
+        <Method name="mouseDragged" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+        <Method name="mouseMoved" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="e"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="game.Player" target="game.Movement" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="bottomPanel" source="game.StartGame" target="game.BottomPanel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="selectCharacterUI" source="game.Introduction" target="game.SelectCharacter" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="assumptionWindow" source="game.Sidemenu" target="game.Guess" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="player" source="game.BottomPanel" target="game.Player" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="movement" source="game.Player" target="game.Movement" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="instructionUI" source="game.Introduction" target="game.Instruction" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.Sidemenu" target="game.NoteBook" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="game.Sidemenu" target="game.Guess" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="startGame" source="game.SelectCharacter" target="game.StartGame" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="board" source="game.StartGame" target="game.GameBoard" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="sidemenu" source="game.StartGame" target="game.Sidemenu" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cardDeck" source="game.StartGame" target="game.CardDeck" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="accusationWindow" source="game.Sidemenu" target="game.Guess" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="noteBookWindow" source="game.Sidemenu" target="game.NoteBook" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

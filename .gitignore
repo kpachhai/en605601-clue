@@ -1,3 +1,4 @@
-/build/
-/dist/
-/en605601-clue/nbproject/private/
+build/
+dist/
+nbproject/private/private.properties
+nbproject/private/private
