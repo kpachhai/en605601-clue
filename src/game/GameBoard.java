@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 public class GameBoard extends JPanel implements ActionListener {
 
     //Default GameBoard Image.
-    private final ImageIcon BOARD_IMAGE = new ImageIcon("images/Board Resized.jpeg");
+    private final ImageIcon BOARD_IMAGE = new ImageIcon("images/BoardResized.jpg");
 
     //Panel components.
     private JLabel board;
