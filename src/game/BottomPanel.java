@@ -1,28 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
-import game.GameItems.Card;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.util.*;
+import game.GameItems.*;
 
-/**
- *
- * @author kiran
- */
+/** UIConsole Panel houses the visual of a Player's hand, the assumptions made, and console messages.  */
 public class BottomPanel extends JTabbedPane implements ChangeListener {
 
     //Panel Components.
@@ -35,7 +19,7 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
     private JButton[] hand; //Container for buttons of player's cards.
 
     private final ImageIcon BACK_IMAGE = new ImageIcon("images/cardback.jpg");
-    private final ImageIcon PAPER = new ImageIcon("images/paper.jpg");
+    private final ImageIcon PAPER = new ImageIcon("images/Paper.jpg");
     private final ImageIcon CARD_TAB_ICON = new ImageIcon("images/CardIcon Small.png");
     private final ImageIcon CONSOLE_TAB_ICON = new ImageIcon("images/SpeechIcon Small.png");
 
@@ -45,13 +29,11 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
     private Card suspectAssumptionCard;
     private Card roomAssumptionCard;
 
-    /**
-     * Constructor.
-     *
-     * @param player User's character.
-     */
-    public BottomPanel(Player player) {
-        
+    /** Constructor.
+     * @param player User's character.  */
+    public BottomPanel(Player player){
+
+
         this.player = player;
 
         setTabPlacement(LEFT);
@@ -71,9 +53,9 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
         consoleArea.add(enterButton, BorderLayout.SOUTH);
 
         //Create assumptionArea and both tabs.
-        assumptionArea = new JPanel(new FlowLayout(10, 1, 1));
-        cardsTab = new JPanel(new FlowLayout(10, 1, 1));
-        consoleTab = new JPanel(new GridLayout(1, 2, 1, 1));
+        assumptionArea = new JPanel(new FlowLayout(10,1,1));
+        cardsTab = new JPanel(new FlowLayout(10,1,1));
+        consoleTab = new JPanel(new GridLayout(1,2,1,1));
 
         //Create and add suspectAssumption.
         suspectAssumption = new JLabel();
@@ -96,7 +78,7 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
 
         //Create buttons for hand.
         hand = new JButton[6];
-        for (int i = 0; i < hand.length; i++) {
+        for( int i=0; i<hand.length; i++){
             hand[i] = new JButton();
             hand[i].setIcon(player.getHand().get(i).getImage());
             cardsTab.add(hand[i]);
@@ -114,26 +96,15 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
     }
 
     @Override
-    public void stateChanged(ChangeEvent e) {
+    public void stateChanged(ChangeEvent e){
     }
 
-    /**
-     * Get Methods.
-     * @return 
-     */
-    public JButton getEnterButton() {
-        return enterButton;
-    }
+    /** Get Methods.  */
+    public JButton getEnterButton() {return enterButton; }
+    public JButton[] getHand()      { return hand;}
 
-    public JButton[] getHand() {
-        return hand;
-    }
-
-    /**
-     * Set Methods.
-     * @param assumption
-     */
-    public void setWeaponAssumption(Card assumption) {
+    /** Set Methods.  */
+    public void setWeaponAssumption(Card assumption)  {
         weaponAssumptionCard = assumption;
         weaponAssumption.setIcon(assumption.getImage());
     }
@@ -143,109 +114,75 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
         suspectAssumption.setIcon(assumption.getImage());
     }
 
-    public void setRoomAssumption(Card assumption) {
+    public void setRoomAssumption(Card assumption)    {
         roomAssumptionCard = assumption;
         roomAssumption.setIcon(assumption.getImage());
     }
 
-    public Card getWeaponAssumption() {
-        return weaponAssumptionCard;
-    }
+    public Card getWeaponAssumption(){ return weaponAssumptionCard; }
+    public Card getSuspectAssumption(){ return suspectAssumptionCard; }
+    public Card getRoomAssumption(){ return roomAssumptionCard; }
 
-    public Card getSuspectAssumption() {
-        return suspectAssumptionCard;
-    }
-
-    public Card getRoomAssumption() {
-        return roomAssumptionCard;
-    }
-
-    /**
-     * changeConsoleMessage adds given String to console display and switches
-     * tab to console.
-     *
-     * @param message To be displayed in the console.
-     */
-    public void changeConsoleMessage(String message) {
+    /** changeConsoleMessage adds given String to console display and switches tab to console.
+     * @param message To be displayed in the console.  */
+    public void changeConsoleMessage(String message){
         setSelectedIndex(1);
         console.setText(message);
     }
 
-    /**
-     * clearConsoleMessage removes content of console.
-     */
-    public void clearConsoleMessage() {
+    /** clearConsoleMessage removes content of console.  */
+    public void clearConsoleMessage(){
         console.setText("");
     }
 
-    /**
-     * messageConfirmed checks whether message has been cleared. Method also
-     * re-enables assumption cards after disproval.
-     * @return 
-     */
-    public boolean messageConfirmed() {
+    /** messageConfirmed checks whether message has been cleared.
+     *  Method also re-enables assumption cards after disproval.  */
+    public boolean messageConfirmed(){
         weaponAssumption.setEnabled(true);
         suspectAssumption.setEnabled(true);
         roomAssumption.setEnabled(true);
         return console.getText().equals("");
     }
 
-    /**
-     * resetAssumption returns all assumption cards to the original cardback
-     * image.
-     */
-    public void resetAssumption() {
+    /** resetAssumption returns all assumption cards to the original cardback image.  */
+    public void resetAssumption(){
         suspectAssumption.setIcon(BACK_IMAGE);
         weaponAssumption.setIcon(BACK_IMAGE);
         roomAssumption.setIcon(BACK_IMAGE);
     }
 
-    /**
-     * highlightDisprovables disables all hand buttons other than valid
-     * disprovables.
-     *
-     * @param guess Cards assumed by outher player to be disproved.
-     */
-    public void highlightDisprovables(ArrayList<Card> guess) {
+    /** highlightDisprovables disables all hand buttons other than valid disprovables.
+     * @param guess Cards assumed by outher player to be disproved.  */
+    public void highlightDisprovables(ArrayList<Card> guess){
         setSelectedIndex(0);
 
-        for (int i = 0; i < player.getHand().size(); i++) {
+        for(int i = 0; i<player.getHand().size(); i++){
             Card check = player.getHand().get(i);
-            if (!guess.contains(check)) {
+            if(!guess.contains(check))
                 hand[i].setEnabled(false);
-            }
         }
     }
 
-    /**
-     * highlightDisproval disables all assumption cards other than the one
-     * chosen by other player.
-     *
-     * @param card Card used to disprove player's assumption.
-     */
-    public void highlightDisproval(Card card) {
-        switch (card.getType()) {
-            case 1:
-                suspectAssumption.setEnabled(false);
-                roomAssumption.setEnabled(false);
-                break;
-            case 2:
-                weaponAssumption.setEnabled(false);
-                suspectAssumption.setEnabled(false);
-                break;
-            default:
-                weaponAssumption.setEnabled(false);
-                roomAssumption.setEnabled(false);
-                break;
+    /** highlightDisproval disables all assumption cards other than the one chosen by other player.
+     * @param card Card used to disprove player's assumption.  */
+    public void highlightDisproval(Card card){
+        if(card.getType() == 1) {
+            suspectAssumption.setEnabled(false);
+            roomAssumption.setEnabled(false);
+        }
+        else if(card.getType() == 2) {
+            weaponAssumption.setEnabled(false);
+            suspectAssumption.setEnabled(false);
+        }
+        else {
+            weaponAssumption.setEnabled(false);
+            roomAssumption.setEnabled(false);
         }
     }
 
-    /**
-     * resetButtons re-enables all hand buttons after disproving is completed.
-     */
-    public void resetButtons() {
-        for (JButton hand1 : hand) {
-            hand1.setEnabled(true);
-        }
+    /** resetButtons re-enables all hand buttons after disproving is completed.  */
+    public void resetButtons(){
+        for(int i=0; i<hand.length; i++)
+            hand[i].setEnabled(true);
     }
 }

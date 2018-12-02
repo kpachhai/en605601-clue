@@ -1,43 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
-/**
- *
- * @author kiran
- */
-public class GameBoard extends JPanel implements ActionListener {
+/** GameBoard Class represents graphical display of game board. */
+public class GameBoard extends JPanel implements ActionListener{
 
     //Default GameBoard Image.
-    private final ImageIcon BOARD_IMAGE = new ImageIcon("images/BoardResized.jpg");
+    private final ImageIcon BOARD_IMAGE = new ImageIcon("images/Board Resized.jpeg");
 
     //Panel components.
     private JLabel board;
 
     private ArrayList<JLabel> gamePiece;
 
-    /**
-     * Constructor.
-     *
-     * @param players
-     */
-    public GameBoard(Player[] players) {
+    private JLabel easterEgg;
+    private javax.swing.Timer eggStart, eggMove, eggFlip, eggStop, eggEnd;
+    private boolean eggIsRunning;
 
-        gamePiece = new ArrayList<>();
+    /** Constructor.  */
+    public GameBoard(Player[] players){
+
+        gamePiece = new ArrayList<JLabel>();
 
         //Initialize Layered Pane & Set Dimension.
         JLayeredPane layeredPane = new JLayeredPane();
@@ -49,51 +35,87 @@ public class GameBoard extends JPanel implements ActionListener {
         layeredPane.add(board, new Integer(5));
 
         //Initialize Game Piece label, set default image, and add to Pane at depth 10.
-        for (Player player : players) {
-            gamePiece.add(player.getGamePiece());
-            layeredPane.add(player.getGamePiece(), new Integer(10));
+        for(int i=0; i<players.length; i++) {
+            gamePiece.add(players[i].getGamePiece());
+            layeredPane.add(players[i].getGamePiece(), new Integer(10));
         }
+
+        easterEgg = new JLabel();
+        easterEgg.setIcon(new ImageIcon("images/flip1.png"));
+        layeredPane.add(easterEgg, new Integer(20));
+        easterEgg.setVisible(false);
+        eggIsRunning = false;
 
         //Add LayeredPane to Inherited JPanel.
         add(layeredPane, JPanel.CENTER_ALIGNMENT);
         setBackground(Color.BLACK);
 
         //Set bounds of labels.
-        for (int i = 0; i < players.length; i++) {
+        for(int i=0; i<players.length; i++) {
             gamePiece.get(i).setBounds(players[i].getMovement().getXPos(),
                     players[i].getMovement().getYPos(),
                     gamePiece.get(i).getIcon().getIconWidth(),
                     gamePiece.get(i).getIcon().getIconHeight());
         }
 
+        easterEgg.setBounds(580,125,easterEgg.getIcon().getIconWidth(), easterEgg.getIcon().getIconHeight());
         board.setBounds(0, 0, BOARD_IMAGE.getIconWidth(), BOARD_IMAGE.getIconHeight());
+
+        eggStart = new javax.swing.Timer(100, this);
+        eggMove = new javax.swing.Timer(2000, this);
+        eggFlip = new javax.swing.Timer(500, this);
+        eggFlip.setRepeats(false);
+        eggStop = new javax.swing.Timer(1500, this);
+        eggStop.setRepeats(false);
+        eggEnd = new javax.swing.Timer(1500, this);
+        eggEnd.setRepeats(false);
     }
 
-    /**
-     * Get gamePiece Point Method.
-     * @param index
-     * @return 
-     */
+    /** Get gamePiece Point Method.  */
     public Point getGamePiecePoint(int index) {
         return new Point(gamePiece.get(index).getX(), gamePiece.get(index).getY());
     }
 
-    /**
-     * Set boardIcon method.
-     * @param image
-     */
-    public void setBoardIcon(ImageIcon image) {
-        board.setIcon(image);
+    /** Set boardIcon method.  */
+    public void setBoardIcon(ImageIcon image) { board.setIcon(image); }
+
+    /** Resets boardIcon.  */
+    public void resetBoardIcon() { board.setIcon(BOARD_IMAGE); }
+
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == eggStart){
+            easterEgg.setLocation(easterEgg.getX()-5,easterEgg.getY());
+        }
+        if(e.getSource() == eggStop){
+            eggStart.stop();
+        }
+        if(e.getSource() == eggMove && easterEgg.getX() != 370){
+            eggStart.start();
+            eggStop.start();
+        }
+        else if(e.getSource() == eggMove && easterEgg.getX() == 370){
+            eggFlip.start();
+            eggMove.stop();
+        }
+        if(e.getSource() == eggFlip){
+            easterEgg.setIcon(new ImageIcon("images/flip2.png"));
+            eggEnd.start();
+        }
+        if(e.getSource() == eggEnd){
+            easterEgg.setLocation(580, 125);
+            easterEgg.setVisible(false);
+            easterEgg.setIcon(new ImageIcon("images/flip1.png"));
+            eggIsRunning = false;
+        }
     }
 
-    /**
-     * Resets boardIcon.
-     */
-    public void resetBoardIcon() {
-        board.setIcon(BOARD_IMAGE);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public void startEgg(){
+        if(!eggIsRunning) {
+            eggIsRunning = true;
+            easterEgg.setVisible(true);
+            eggStart.start();
+            eggStop.start();
+            eggMove.start();
+        }
     }
 }

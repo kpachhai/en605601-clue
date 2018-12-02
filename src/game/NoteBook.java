@@ -6,7 +6,6 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 import game.GameItems.*;
-import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 
 /** Clue NoteBook Window.  */
 public class NoteBook extends JFrame implements ChangeListener, ActionListener{
@@ -37,17 +36,12 @@ public class NoteBook extends JFrame implements ChangeListener, ActionListener{
             JToggleButton button = new JToggleButton();
             button.setIcon(card.getImage());
             button.setSelectedIcon(cardBack);
-            switch (card.getType()) {
-                case 1:
-                    weaponsTab.add(button);
-                    break;
-                case 2:
-                    locationsTab.add(button);
-                    break;
-                default:
-                    suspectsTab.add(button);
-                    break;
-            }
+            if(card.getType() == 1)
+                weaponsTab.add(button);
+            else if(card.getType() == 2)
+                locationsTab.add(button);
+            else
+                suspectsTab.add(button);
 
             button.addActionListener(this);
         }

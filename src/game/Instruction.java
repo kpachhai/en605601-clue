@@ -2,6 +2,7 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
+import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
 
 /**
  *

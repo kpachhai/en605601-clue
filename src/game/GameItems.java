@@ -1,12 +1,18 @@
 package game;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Area;
+import javax.swing.ImageIcon;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 /**
  *
- * @author kiran
+ * @author KP
  */
 public final class GameItems {
 
@@ -14,6 +20,7 @@ public final class GameItems {
      * eNum Card represents all cards present in the game.
      */
     public enum Card {
+
         //Weapons
         KNIFE("Knife", 1), ROPE("Rope", 1), CANDLESTICK("Candlestick", 1),
         REVOLVER("Revolver", 1), PIPE("Lead Pipe", 1), WRENCH("Wrench", 1),
@@ -33,17 +40,21 @@ public final class GameItems {
          * Constructor
          */
         Card(String name, int type) {
+
             //Set variables.
             this.name = name;
             this.type = type;
+
             //Directory of image is based on card type.
             switch (type) {
                 case 1:     //Weapon
                     image = new ImageIcon("images/weapons/" + name + ".jpg");
                     break;
+
                 case 2:     //Location
                     image = new ImageIcon("images/locations/" + name + ".jpg");
                     break;
+
                 case 3:     //Suspect
                     image = new ImageIcon("images/suspects/" + name + ".jpg");
                     break;
@@ -52,7 +63,6 @@ public final class GameItems {
 
         /**
          * Get Methods for Card values
-         * @return 
          */
         public String getName() {
             return name;
@@ -65,17 +75,118 @@ public final class GameItems {
         public int getType() {
             return type;
         }
+
+    }
+
+    /**
+     * eNum Steps represents each side of a 6-sided die.
+     */
+    public enum Steps {
+
+        Steps(1, "Steps.jpg");
+
+        private int side;           //Numerical value of dice side
+        private ImageIcon image;    //Image of dice side.
+
+        /**
+         * Constructor
+         */
+        Steps(int side, String directory) {
+            this.side = side;
+            image = new ImageIcon("images/" + directory);
+        }
+
+        /**
+         * Get Methods
+         */
+        public ImageIcon getImage() {
+            return image;
+        }
+
+        public int getSide() {
+            return side;
+        }
+    }
+
+    /**
+     * eNum GamePiece represents all usable game pieces in clue.
+     */
+    public enum GamePiece {
+
+        //Game Pieces.
+        GREEN(Rooms.BILLIARD, Card.GREEN, "Green Piece.png"),
+        PLUM(Rooms.STUDY, Card.PLUM, "Plum Piece.png"),
+        MUSTARD(Rooms.LOUNGE, Card.MUSTARD, "Mustard Piece.png"),
+        SCARLET(Rooms.BALLROOM, Card.SCARLET, "Scarlet Piece.png"),
+        PEACOCK(Rooms.CONSERVATORY, Card.PEACOCK, "Peacock Piece.png"),
+        WHITE(Rooms.KITCHEN, Card.WHITE, "White Piece.png");
+
+        private Rooms rooms;        //Starting locations.
+        private Card card;          //Card equivalent.
+        private ImageIcon image;    //Character Image.
+
+        /* Constructor */
+        GamePiece(Rooms rooms, Card card, String directory) {
+            this.rooms = rooms;
+            this.card = card;
+            image = new ImageIcon("images/" + directory);
+        }
+
+        /* Get methods */
+        public ImageIcon getImage() {
+            return image;
+        }
+
+        public Card getCard() {
+            return card;
+        }
+
+        public Rooms getRooms() {
+            return rooms;
+        }
+
+    }
+
+    /**
+     * eNum Passages represents all intermediary positions on the board.
+     */
+    public enum Passages {
+
+        //Hall Areas.
+        //HALL_A(167,127), HALL_B(234,168), HALL_C(166,295), HALL_D(234,360),
+        //HALL_E(144,402), HALL_F(368, 189), HALL_G(368, 359);
+        PASSAGE_STUDY_LIBRARY(78, 150), PASSAGE_LIBRARY_CONSERVATORY(78, 365), PASSAGE_CONSERVATORY_BALLROOM(185, 478),
+        PASSAGE_BALLROOM_KITCHEN(382, 478), PASSAGE_KITCHEN_DININGROOM(492, 365), PASSAGE_DININGROOM_LOUNGE(492, 150),
+        PASSAGE_LOUNGE_HALL(382, 50), PASSAGE_HALL_STUDY(185, 50), PASSAGE_BILLIARD_HALL(280, 150),
+        PASSAGE_BILLIARD_LIBRARY(185, 248), PASSAGE_BILLIARD_BALLROOM(280, 365), PASSAGE_BILLIARD_DININGROOM(382, 248);
+
+        private Point position;     //Location of Hall tile.
+
+        /**
+         * Constructor
+         */
+        Passages(int xPos, int yPos) {
+            position = new Point(xPos, yPos);
+        }
+
+        /**
+         * Get Methods
+         */
+        public Point getPosition() {
+            return position;
+        }
     }
 
     /**
      * eNum Rooms represents all selectable locations on the board.
      */
     public enum Rooms {
+
         //Rooms
         STUDY(new Area(new Rectangle(43, 24, 150, 107)), 45, 45, "Study"),
         LIBRARY(new Area(new Rectangle(43, 219, 150, 107)), 45, 268, "Library"),
         CONSERVATORY(new Area(new Rectangle(43, 438, 150, 107)), 48, 460, "Conservatory"),
-        HALL(new Area(new Rectangle(245, 23, 150, 107)), 250, 45, "Hall"), 
+        HALL(new Area(new Rectangle(245, 23, 150, 107)), 250, 45, "Hall"),
         BILLIARD(new Area(new Rectangle(250, 218, 150, 107)), 255, 273, "Billiard Room"),
         BALLROOM(new Area(new Rectangle(245, 439, 150, 107)), 255, 446, "Ballroom"),
         LOUNGE(new Area(new Rectangle(446, 19, 150, 107)), 445, 40, "Lounge"),
@@ -121,71 +232,7 @@ public final class GameItems {
         public String getName() {
             return name;
         }
+
     }
 
-    /**
-     * eNum Passages represents all intermediary positions on the board.
-     */
-    public enum Passages {
-
-        //Passage Areas.
-        PASSAGE_STUDY_LIBRARY(78, 150), PASSAGE_LIBRARY_CONSERVATORY(78, 365), PASSAGE_CONSERVATORY_BALLROOM(185, 478), 
-        PASSAGE_BALLROOM_KITCHEN(320, 478), PASSAGE_KITCHEN_DININGROOM(492, 365), PASSAGE_DININGROOM_LOUNGE(492, 150), 
-        PASSAGE_LOUNGE_HALL(382, 50), PASSAGE_HALL_STUDY(185, 50), PASSAGE_BILLIARD_HALL(280, 150),
-        PASSAGE_BILLIARD_LIBRARY(185, 248), PASSAGE_BILLIARD_BALLROOM(280, 365), PASSAGE_BILLIARD_DININGROOM(382, 248);
-
-        private Point position;     //Location of Hall tile.
-
-        /**
-         * Constructor
-         */
-        Passages(int xPos, int yPos) {
-            position = new Point(xPos, yPos);
-        }
-
-        /**
-         * Get Methods
-         * @return 
-         */
-        public Point getPosition() {
-            return position;
-        }
-    }
-
-    /**
-     * eNum GamePiece represents all usable game pieces in clue.
-     */
-    public enum GamePiece {
-        //Game Pieces.
-        GREEN(Rooms.BILLIARD, Card.GREEN, "Green Piece.png"),
-        PLUM(Rooms.STUDY, Card.PLUM, "Plum Piece.png"),
-        MUSTARD(Rooms.LOUNGE, Card.MUSTARD, "Mustard Piece.png"),
-        SCARLET(Rooms.BALLROOM, Card.SCARLET, "Scarlet Piece.png"),
-        PEACOCK(Rooms.CONSERVATORY, Card.PEACOCK, "Peacock Piece.png"),
-        WHITE(Rooms.KITCHEN, Card.WHITE, "White Piece.png");
-
-        private Rooms rooms;        //Starting locations.
-        private Card card;          //Card equivalent.
-        private ImageIcon image;    //Character Image.
-
-        /* Constructor */
-        GamePiece(Rooms rooms, Card card, String directory) {
-            this.rooms = rooms;
-            this.card = card;
-            image = new ImageIcon("images/" + directory);
-        }
-
-        /* Get methods */
-        public ImageIcon getImage() {
-            return image;
-        }
-
-        public Card getCard() {
-            return card;
-        }
-
-        public Rooms getRooms() {
-            return rooms;
-        }
-    }
 }
