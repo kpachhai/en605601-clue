@@ -3,8 +3,10 @@ package game;
 import java.util.*;
 import game.GameItems.*;
 
-/** Deck class emulates a deck of cards. It fills the game envelope
- *  and deals a set number of cards to the 3 players.  */
+/**
+ * Deck class emulates a deck of cards. It fills the game envelope and deals a
+ * set number of cards to the 3 players.
+ */
 public class CardDeck {
 
     private ArrayList<Card> weapons;    //Container for all weapon cards.
@@ -13,22 +15,31 @@ public class CardDeck {
 
     private Random rand = new Random();
 
-    /** Constructor  */
+    /**
+     * Constructor
+     */
     public CardDeck() {
 
         //Instantiate ArrayLists.
-        weapons = new ArrayList<Card>();
-        rooms = new ArrayList<Card>();
-        suspects = new ArrayList<Card>();
+        weapons = new ArrayList<>();
+        rooms = new ArrayList<>();
+        suspects = new ArrayList<>();
 
         //add cards to appropriate container.
-        for(Card card : Card.values()) {
-            if (card.getType() == 1)
-                weapons.add(card);
-            else if (card.getType() == 2)
-                rooms.add(card);
-            else if (card.getType() == 3)
-                suspects.add(card);
+        for (Card card : Card.values()) {
+            switch (card.getType()) {
+                case 1:
+                    weapons.add(card);
+                    break;
+                case 2:
+                    rooms.add(card);
+                    break;
+                case 3:
+                    suspects.add(card);
+                    break;
+                default:
+                    break;
+            }
         }
 
         //Randomize order in each container.
@@ -37,80 +48,93 @@ public class CardDeck {
         Collections.shuffle(suspects);
     }
 
-    /** Get a Card of type Weapon.  */
+    /**
+     * Get a Card of type Weapon.
+     */
     private Card drawWeapon() {
 
         try {
             Card drawn = weapons.get(0);    //Shallow copy of Card.
             weapons.remove(0);              //Remove Card from container.
             return drawn;                   //Return Card.
-        }
-        //Catch if ArrayList is Empty (all cards have been drawn).
-        catch (Exception e){
-            return null;
-        }
-    }
-
-    /** Get a Card of type Location.  */
-    private Card drawRoom() {
-
-        try{
-            Card drawn = rooms.get(0);      //Shallow copy of Card.
-            rooms.remove(0);                //Remove Card from container.
-            return drawn;                   //Return Card.
-        }
-        //Catch if ArrayList is Empty (all cards have been drawn).
+        } //Catch if ArrayList is Empty (all cards have been drawn).
         catch (Exception e) {
             return null;
         }
     }
 
-    /** Get a Card of type Suspect.  */
+    /**
+     * Get a Card of type Location.
+     */
+    private Card drawRoom() {
+
+        try {
+            Card drawn = rooms.get(0);      //Shallow copy of Card.
+            rooms.remove(0);                //Remove Card from container.
+            return drawn;                   //Return Card.
+        } //Catch if ArrayList is Empty (all cards have been drawn).
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get a Card of type Suspect.
+     */
     private Card drawSuspects() {
 
         try {
             Card drawn = suspects.get(0);   //Shallow copy of Card.
             suspects.remove(0);             //Remove Card from container.
             return drawn;                   //Return Card.
-        }
-        //Catch is ArrayList is Empty (all cards have been drawn).
-        catch (Exception e){
+        } //Catch is ArrayList is Empty (all cards have been drawn).
+        catch (Exception e) {
             return null;
         }
     }
 
-    /** drawCard Method returns a random type of card.
-     * @return Drawn card, randomized between all three ArrayLists.  */
-    private Card drawCard(){
+    /**
+     * drawCard Method returns a random type of card.
+     *
+     * @return Drawn card, randomized between all three ArrayLists.
+     */
+    private Card drawCard() {
 
         //Set container for return and ne
         Card toReturn = null;
 
-        while(toReturn == null && !allEmpty()){
-            int i = rand.nextInt(3)+1;
+        while (toReturn == null && !allEmpty()) {
+            int i = rand.nextInt(3) + 1;
 
-            switch (i){
+            switch (i) {
                 case 1:
-                    if(!weapons.isEmpty())
+                    if (!weapons.isEmpty()) {
                         toReturn = drawWeapon();
+                    }
                     break;
                 case 2:
-                    if(!rooms.isEmpty())
+                    if (!rooms.isEmpty()) {
                         toReturn = drawRoom();
+                    }
                     break;
 
                 case 3:
-                    if(!suspects.isEmpty())
-                       toReturn = drawSuspects();
+                    if (!suspects.isEmpty()) {
+                        toReturn = drawSuspects();
+                    }
                     break;
             }
         }
         return toReturn;
     }
 
-    /** fillEnvelope draws one of each type card from deck and places it in envelope.
-     * @return Three cards, one of each type.  */
-    public Card[] fillEnvelope(){
+    /**
+     * fillEnvelope draws one of each type card from deck and places it in
+     * envelope.
+     *
+     * @return Three cards, one of each type.
+     */
+    public Card[] fillEnvelope() {
         Card[] envelope = new Card[3];
 
         envelope[0] = drawWeapon();
@@ -120,18 +144,27 @@ public class CardDeck {
         return envelope;
     }
 
-    /** dealHand deals 6 cards to a player.  */
-    public ArrayList<Card> dealHand(){
-        ArrayList<Card> hand = new ArrayList<Card>();
+    /**
+     * dealHand deals 6 cards to a player.
+     *
+     * @return
+     */
+    public ArrayList<Card> dealHand() {
+        ArrayList<Card> hand = new ArrayList<>();
 
-        for(int i=1; i<=6; i++)
+        for (int i = 1; i <= 6; i++) {
             hand.add(drawCard());
+        }
 
         return hand;
     }
 
-    /** allEmpty checks if all cards have been drawn.  */
-    public boolean allEmpty(){
+    /**
+     * allEmpty checks if all cards have been drawn.
+     *
+     * @return
+     */
+    public boolean allEmpty() {
         return (weapons.isEmpty() && rooms.isEmpty() && suspects.isEmpty());
     }
 }

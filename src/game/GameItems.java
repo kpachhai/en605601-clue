@@ -63,6 +63,8 @@ public final class GameItems {
 
         /**
          * Get Methods for Card values
+         *
+         * @return
          */
         public String getName() {
             return name;
@@ -98,6 +100,8 @@ public final class GameItems {
 
         /**
          * Get Methods
+         *
+         * @return
          */
         public ImageIcon getImage() {
             return image;
@@ -169,6 +173,8 @@ public final class GameItems {
 
         /**
          * Get Methods
+         *
+         * @return
          */
         public Point getPosition() {
             return position;

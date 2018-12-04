@@ -7,7 +7,7 @@ import java.awt.event.*;
 import game.GameItems.*;
 import java.util.*;
 
-public class SelectCharacter extends JFrame implements ActionListener{
+public class SelectCharacter extends JFrame implements ActionListener {
 
     private ArrayList<GamePiece> characters;
     private ArrayList<JButton> characterButtons;
@@ -15,22 +15,22 @@ public class SelectCharacter extends JFrame implements ActionListener{
     private int playerSelectNum;
     private StartGame mainWindow;
 
-    public SelectCharacter(){
+    public SelectCharacter() {
 
-        JPanel displayBox = new JPanel(new GridLayout(2,3,5,5));
+        JPanel displayBox = new JPanel(new GridLayout(2, 3, 5, 5));
 
-        characters = new ArrayList<GamePiece>(6);
-        characterButtons = new ArrayList<JButton>(6);
-        selection = new ArrayList<GamePiece>(3);
+        characters = new ArrayList<>(6);
+        characterButtons = new ArrayList<>(6);
+        selection = new ArrayList<>(3);
         playerSelectNum = 0;
 
-        for(GamePiece gamePiece : GamePiece.values()){
-                JButton option = new JButton();
-                option.setIcon(gamePiece.getCard().getImage());
-                option.addActionListener(this);
-                characterButtons.add(option);
-                characters.add(gamePiece);
-                displayBox.add(option);
+        for (GamePiece gamePiece : GamePiece.values()) {
+            JButton option = new JButton();
+            option.setIcon(gamePiece.getCard().getImage());
+            option.addActionListener(this);
+            characterButtons.add(option);
+            characters.add(gamePiece);
+            displayBox.add(option);
         }
 
         add(displayBox);
@@ -44,18 +44,19 @@ public class SelectCharacter extends JFrame implements ActionListener{
         setAlwaysOnTop(true);
     }
 
-    public void actionPerformed(ActionEvent e){
+    @Override
+    public void actionPerformed(ActionEvent e) {
         playerSelectNum++;
 
-        for(int i=0; i<characterButtons.size(); i++){
-            if(e.getSource() == characterButtons.get(i)){
+        for (int i = 0; i < characterButtons.size(); i++) {
+            if (e.getSource() == characterButtons.get(i)) {
                 characterButtons.get(i).setEnabled(false);
                 selection.add(characters.get(i));
                 setTitle("Select Opponent #" + playerSelectNum);
             }
         }
 
-        if(playerSelectNum == 3){
+        if (playerSelectNum == 3) {
             mainWindow = new StartGame(selection);
             dispose();
         }

@@ -7,8 +7,10 @@ import javax.swing.event.*;
 
 import game.GameItems.*;
 
-/** Clue NoteBook Window.  */
-public class NoteBook extends JFrame implements ChangeListener, ActionListener{
+/**
+ * Clue NoteBook Window.
+ */
+public class NoteBook extends JFrame implements ChangeListener, ActionListener {
 
     //Window Components.
     private JTabbedPane notebookTab;
@@ -20,8 +22,10 @@ public class NoteBook extends JFrame implements ChangeListener, ActionListener{
     //Card Back images.
     private final ImageIcon cardBack = new ImageIcon("images/cardback.jpg");
 
-    /** Constructor.  */
-    public NoteBook(){
+    /**
+     * Constructor.
+     */
+    public NoteBook() {
 
         //Create tabbed pane.
         notebookTab = new JTabbedPane();
@@ -32,16 +36,17 @@ public class NoteBook extends JFrame implements ChangeListener, ActionListener{
         locationsTab = new JPanel(new GridLayout(3, 3, 5, 5));
 
         //Populate panels.
-        for(Card card : Card.values()){
+        for (Card card : Card.values()) {
             JToggleButton button = new JToggleButton();
             button.setIcon(card.getImage());
             button.setSelectedIcon(cardBack);
-            if(card.getType() == 1)
+            if (card.getType() == 1) {
                 weaponsTab.add(button);
-            else if(card.getType() == 2)
+            } else if (card.getType() == 2) {
                 locationsTab.add(button);
-            else
+            } else {
                 suspectsTab.add(button);
+            }
 
             button.addActionListener(this);
         }
@@ -57,7 +62,7 @@ public class NoteBook extends JFrame implements ChangeListener, ActionListener{
         add(notebookTab);
 
         //Set JFrame conditionals.
-        setSize(380,460);
+        setSize(380, 460);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setResizable(false);
         setLocation(800, 0);
@@ -69,31 +74,35 @@ public class NoteBook extends JFrame implements ChangeListener, ActionListener{
 
     }
 
-    /** Triggers for resizing animations.  */
-    public void stateChanged(ChangeEvent e){
-        if(notebookTab.getSelectedIndex() == 2) {
+    /**
+     * Triggers for resizing animations.
+     */
+    public void stateChanged(ChangeEvent e) {
+        if (notebookTab.getSelectedIndex() == 2) {
             shrink.stop();
             grow.start();
-        }
-        else {
+        } else {
             grow.stop();
             shrink.start();
         }
     }
 
-    /** Listeners for resizing animations.  */
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == grow){
-            if(getHeight() < 640)
-                setSize(380, getHeight()+20);
-            else
+    /**
+     * Listeners for resizing animations.
+     */
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == grow) {
+            if (getHeight() < 640) {
+                setSize(380, getHeight() + 20);
+            } else {
                 grow.stop();
-        }
-        else if(e.getSource() == shrink){
-            if(getHeight() > 460)
-                setSize(380, getHeight()-20);
-            else
+            }
+        } else if (e.getSource() == shrink) {
+            if (getHeight() > 460) {
+                setSize(380, getHeight() - 20);
+            } else {
                 shrink.stop();
+            }
         }
     }
 }

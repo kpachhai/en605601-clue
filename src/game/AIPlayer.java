@@ -27,12 +27,16 @@ public class AIPlayer extends Player {
 
         //Populate Memories with Card enum.
         for (Card card : Card.values()) {
-            if (card.getType() == 1) {
-                weapon.addToFront(card, 1);
-            } else if (card.getType() == 2) {
-                room.addToFront(card, 1);
-            } else {
-                person.addToFront(card, 1);
+            switch (card.getType()) {
+                case 1:
+                    weapon.addToFront(card, 1);
+                    break;
+                case 2:
+                    room.addToFront(card, 1);
+                    break;
+                default:
+                    person.addToFront(card, 1);
+                    break;
             }
         }
 
@@ -42,6 +46,8 @@ public class AIPlayer extends Player {
 
     /**
      * Required Get Methods.
+     *
+     * @return
      */
     public Card getPersonGuess() {
         return person.getAICardGuess();
@@ -52,8 +58,8 @@ public class AIPlayer extends Player {
     }
 
     /**
-     * setDestination randomly assigns new destination to AIPlayer based on AIPlayer's next
- location guess.
+     * setDestination randomly assigns new destination to AIPlayer based on
+     * AIPlayer's next location guess.
      */
     public void setDestination() {
 
@@ -66,43 +72,57 @@ public class AIPlayer extends Player {
         do {
             randomRoom = Rooms.values()[rand.nextInt(9)];
             canMoveToRooms = new ArrayList<Rooms>();
-            if (currentRoom == Rooms.STUDY) {
-                canMoveToRooms.add(Rooms.HALL);
-                canMoveToRooms.add(Rooms.LIBRARY);
-                canMoveToRooms.add(Rooms.KITCHEN);
-            } else if (currentRoom == Rooms.LIBRARY) {
-                canMoveToRooms.add(Rooms.STUDY);
-                canMoveToRooms.add(Rooms.BILLIARD);
-                canMoveToRooms.add(Rooms.CONSERVATORY);
-            } else if (currentRoom == Rooms.CONSERVATORY) {
-                canMoveToRooms.add(Rooms.LIBRARY);
-                canMoveToRooms.add(Rooms.BALLROOM);
-                canMoveToRooms.add(Rooms.LOUNGE);
-            } else if (currentRoom == Rooms.BALLROOM) {
-                canMoveToRooms.add(Rooms.CONSERVATORY);
-                canMoveToRooms.add(Rooms.BILLIARD);
-                canMoveToRooms.add(Rooms.KITCHEN);
-            } else if (currentRoom == Rooms.KITCHEN) {
-                canMoveToRooms.add(Rooms.DININGROOM);
-                canMoveToRooms.add(Rooms.BALLROOM);
-                canMoveToRooms.add(Rooms.STUDY);
-            } else if (currentRoom == Rooms.DININGROOM) {
-                canMoveToRooms.add(Rooms.LOUNGE);
-                canMoveToRooms.add(Rooms.BILLIARD);
-                canMoveToRooms.add(Rooms.KITCHEN);
-            } else if (currentRoom == Rooms.LOUNGE) {
-                canMoveToRooms.add(Rooms.HALL);
-                canMoveToRooms.add(Rooms.DININGROOM);
-                canMoveToRooms.add(Rooms.CONSERVATORY);
-            } else if (currentRoom == Rooms.HALL) {
-                canMoveToRooms.add(Rooms.STUDY);
-                canMoveToRooms.add(Rooms.BILLIARD);
-                canMoveToRooms.add(Rooms.LOUNGE);
-            } else if (currentRoom == Rooms.BILLIARD) {
-                canMoveToRooms.add(Rooms.LIBRARY);
-                canMoveToRooms.add(Rooms.HALL);
-                canMoveToRooms.add(Rooms.DININGROOM);
-                canMoveToRooms.add(Rooms.BALLROOM);
+            if (null != currentRoom) {
+                switch (currentRoom) {
+                    case STUDY:
+                        canMoveToRooms.add(Rooms.HALL);
+                        canMoveToRooms.add(Rooms.LIBRARY);
+                        canMoveToRooms.add(Rooms.KITCHEN);
+                        break;
+                    case LIBRARY:
+                        canMoveToRooms.add(Rooms.STUDY);
+                        canMoveToRooms.add(Rooms.BILLIARD);
+                        canMoveToRooms.add(Rooms.CONSERVATORY);
+                        break;
+                    case CONSERVATORY:
+                        canMoveToRooms.add(Rooms.LIBRARY);
+                        canMoveToRooms.add(Rooms.BALLROOM);
+                        canMoveToRooms.add(Rooms.LOUNGE);
+                        break;
+                    case BALLROOM:
+                        canMoveToRooms.add(Rooms.CONSERVATORY);
+                        canMoveToRooms.add(Rooms.BILLIARD);
+                        canMoveToRooms.add(Rooms.KITCHEN);
+                        break;
+                    case KITCHEN:
+                        canMoveToRooms.add(Rooms.DININGROOM);
+                        canMoveToRooms.add(Rooms.BALLROOM);
+                        canMoveToRooms.add(Rooms.STUDY);
+                        break;
+                    case DININGROOM:
+                        canMoveToRooms.add(Rooms.LOUNGE);
+                        canMoveToRooms.add(Rooms.BILLIARD);
+                        canMoveToRooms.add(Rooms.KITCHEN);
+                        break;
+                    case LOUNGE:
+                        canMoveToRooms.add(Rooms.HALL);
+                        canMoveToRooms.add(Rooms.DININGROOM);
+                        canMoveToRooms.add(Rooms.CONSERVATORY);
+                        break;
+                    case HALL:
+                        canMoveToRooms.add(Rooms.STUDY);
+                        canMoveToRooms.add(Rooms.BILLIARD);
+                        canMoveToRooms.add(Rooms.LOUNGE);
+                        break;
+                    case BILLIARD:
+                        canMoveToRooms.add(Rooms.LIBRARY);
+                        canMoveToRooms.add(Rooms.HALL);
+                        canMoveToRooms.add(Rooms.DININGROOM);
+                        canMoveToRooms.add(Rooms.BALLROOM);
+                        break;
+                    default:
+                        break;
+                }
             }
         } while (randomRoom == currentRoom || !canMoveToRooms.contains(randomRoom));
 
@@ -115,12 +135,18 @@ public class AIPlayer extends Player {
     private void removeStartingCards() {
         ArrayList<Card> a = getHand();
         for (int i = 0; i < a.size(); i++) {
-            if (a.get(i).getType() == 1) {
-                weapon.remove(a.get(i));
-            } else if (a.get(i).getType() == 2) {
-                room.remove(a.get(i));
-            } else if (a.get(i).getType() == 3) {
-                person.remove(a.get(i));
+            switch (a.get(i).getType()) {
+                case 1:
+                    weapon.remove(a.get(i));
+                    break;
+                case 2:
+                    room.remove(a.get(i));
+                    break;
+                case 3:
+                    person.remove(a.get(i));
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -165,11 +191,13 @@ public class AIPlayer extends Player {
     }
 
     /**
-     * getNextAction determines AIPlayer next move, based off of current position
+     * getNextAction determines AIPlayer next move, based off of current
+     * position
      *
      * @param turnStart If it is the beginning of AIPlayer turn.
-     * @return Integer representing next action: 1: Top of turn. Move AIPlayer. 2: AIPlayer
- is ready to make an Accusation. 3: AIPlayer to make Assumption.
+     * @return Integer representing next action: 1: Top of turn. Move AIPlayer.
+     * 2: AIPlayer is ready to make an Accusation. 3: AIPlayer to make
+     * Assumption.
      */
     public int getNextAction(boolean turnStart) {
         if (!getMovement().isInARoom() && turnStart) {
@@ -185,8 +213,8 @@ public class AIPlayer extends Player {
     }
 
     /**
-     * shouldMakeAccusation() checks if AIPlayer has validity in making an accusation,
- ending the game.
+     * shouldMakeAccusation() checks if AIPlayer has validity in making an
+     * accusation, ending the game.
      *
      * @return True if all Memories contain one item.
      */
@@ -210,6 +238,7 @@ public class AIPlayer extends Player {
         }
     }
 
+    @Override
     public String toString() {
         return getName() + ", " + getPlayerNum() + "\nweapons: " + weapon
                 + "\nrooms: " + room + "\nperson: " + person;

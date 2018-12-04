@@ -99,11 +99,13 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
     public void stateChanged(ChangeEvent e){
     }
 
-    /** Get Methods.  */
+    /** Get Methods.
+     * @return  */
     public JButton getEnterButton() {return enterButton; }
     public JButton[] getHand()      { return hand;}
 
-    /** Set Methods.  */
+    /** Set Methods.
+     * @param assumption */
     public void setWeaponAssumption(Card assumption)  {
         weaponAssumptionCard = assumption;
         weaponAssumption.setIcon(assumption.getImage());
@@ -135,8 +137,8 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
         console.setText("");
     }
 
-    /** messageConfirmed checks whether message has been cleared.
-     *  Method also re-enables assumption cards after disproval.  */
+    /** *  messageConfirmed checks whether message has been cleared.Method also re-enables assumption cards after disproval.
+     * @return  */
     public boolean messageConfirmed(){
         weaponAssumption.setEnabled(true);
         suspectAssumption.setEnabled(true);
@@ -166,23 +168,26 @@ public class BottomPanel extends JTabbedPane implements ChangeListener {
     /** highlightDisproval disables all assumption cards other than the one chosen by other player.
      * @param card Card used to disprove player's assumption.  */
     public void highlightDisproval(Card card){
-        if(card.getType() == 1) {
-            suspectAssumption.setEnabled(false);
-            roomAssumption.setEnabled(false);
-        }
-        else if(card.getType() == 2) {
-            weaponAssumption.setEnabled(false);
-            suspectAssumption.setEnabled(false);
-        }
-        else {
-            weaponAssumption.setEnabled(false);
-            roomAssumption.setEnabled(false);
+        switch (card.getType()) {
+            case 1:
+                suspectAssumption.setEnabled(false);
+                roomAssumption.setEnabled(false);
+                break;
+            case 2:
+                weaponAssumption.setEnabled(false);
+                suspectAssumption.setEnabled(false);
+                break;
+            default:
+                weaponAssumption.setEnabled(false);
+                roomAssumption.setEnabled(false);
+                break;
         }
     }
 
     /** resetButtons re-enables all hand buttons after disproving is completed.  */
     public void resetButtons(){
-        for(int i=0; i<hand.length; i++)
-            hand[i].setEnabled(true);
+        for (JButton hand1 : hand) {
+            hand1.setEnabled(true);
+        }
     }
 }
